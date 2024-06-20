@@ -24,7 +24,20 @@ void display_patients(PatientLL* head) {
         head = head->next;
     }
 }
-
+void check_number_input(int &num){
+    while(true)
+    {
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cerr<<"Error! Input must be a number: "<<endl;
+            cin>>num;
+        }
+        if(!cin.fail())
+            break;
+    }
+}
 void display_doctors(DoctorLL* head) {
     cout << "DOCTORS\n-------------------\n";
 
@@ -65,6 +78,7 @@ PatientLL* register_patient(PatientLL* head) {
     id:
         cout << "ID: ";
         cin >> id;
+        check_number_input(id);
         if(ManageLists::patientExists(head,id)) {
             cout << "Id already registered, please change!\n";
             goto id;
@@ -91,6 +105,7 @@ DoctorLL* register_doctor(DoctorLL* head) {
     id:
         cout << "ID: ";
     cin >> id;
+    check_number_input(id);
     if(ManageLists::doctorExists(head,id)) {
         cout << "Id already registered, please change! \n";
         goto id;
@@ -115,6 +130,8 @@ AppointmentLL* register_appointment(DoctorLL* doctor_ll, PatientLL* patient_ll, 
     id:
         cout << "ID: ";
         cin >> appointment_id;
+        check_number_input(appointment_id);
+
     if(ManageLists::appointmentExists(head,appointment_id)) {
         cout << "Id already registered, please change \n";
         goto id;
@@ -126,6 +143,8 @@ AppointmentLL* register_appointment(DoctorLL* doctor_ll, PatientLL* patient_ll, 
     check:
         cout << "P_ID: ";
         cin >> patient_id;
+        check_number_input(patient_id);
+
         if(!ManageLists::patientExists(patient_ll,patient_id)) {
             cout << "Patient Id not registered, please change\n";
             goto check;
@@ -134,6 +153,7 @@ AppointmentLL* register_appointment(DoctorLL* doctor_ll, PatientLL* patient_ll, 
     check2:
         cout << "D_ID: ";
         cin >> doctor_id;
+        check_number_input(patient_id);
         if(!ManageLists::doctorExists(doctor_ll,doctor_id)) {
             cout << "Doctor Id not registered, please change\n";
             goto check2;
